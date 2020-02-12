@@ -1,3 +1,73 @@
 # Snowplow Metronome React JS App
-Written for the front-end coding interview task.
+A simple digital metronome app created as part of the front-end coding interview task at Snowplow Analytics.
 
+Written using Javascript, NodeJS, TypeScript and React.
+* Both server-side and front-end app are transpiled using TypeScript.
+* Server itself is a very simple one to serve static files - currently no APIs implemented.
+* Metronome also emits sound in addition to the visual animation.  
+
+Tested in latest version of Chrome, Opera, Firefox and IE Edge browsers.
+
+## Directory Tree
+
+```
+server/                 --> NodeJS server TS source files.
+    server.ts           --> Server entry file.
+src/                    --> Front-end web SPA sources and assets
+    assets /            --> Non-source asset files
+        fonts/          --> Font files in formats for different browsers
+        audio/          --> Audio files for metronome sounds
+    components/         --> React components
+    styles/             --> SASS files that will get transformed into regular CSS
+    ts-definitions/     --> Global TypeScript definitions
+    config.json         --> Static config file - currently contains the songs and their BPM information.
+    index.tsx           --> SPA entry file.
+www/                    --> Any other files to be served by our NodeJS web server
+package.json            --> NPM package file
+tsconfig.server.json    --> TypeScript config for NodeJS server transpilation
+tsconfig.spa.json       --> TypeScript config for client-side browser app
+webpack.config.js       --> Webpack configuration file 
+```
+
+## Build Steps
+All the building and deploying ideally should be done via `npm run` scripts listed below.
+
+| Command                       | Purpose                               |      
+|-------------------------------|---------------------------------------|
+| `npm run spa:dev`             | (DEV) Runs Webpack and watches files for changes. |
+| `npm run server:dev`          | (DEV) Runs NodeJS web server and watches files for changes restarting server automatically . |
+| `npm run spa:prod`            | (Prod) Builds production version of the web app in `dist` directory. |
+| `npm run server:prod`         | (Prod) Generates production-ready NodeJS server files in `dist-server` dir. |
+| `npm run build:all`           | (Prod) Generates production-ready BOTh server and web app files. |
+| `npm run start`               | (Prod) Starts NodeJS web server after generating production-ready server and web app files. |
+
+Check `package.json` for more detailed command lines.
+
+
+### Setup for Development
+1. Install Node.js and NPM versions compatible with the ones specified in `package.json`. Check it all is good by executing `node -v` command which should output something similar to the below:
+    ```
+    v12.13.1
+    ```
+1. Git-clone  repo locally on your PC:
+    ```bash
+    git clone git@github.com:Romasato/snowplow-metronome-js.git
+    ```
+1. Change dir to `snowplow-metronome-js` and initialize project with required Node.js modules:
+   
+   ```bash
+   cd snowplow-metronome-js
+   npm ci
+   ```
+1. Start server:
+    ```bash
+    npm run server:dev
+    ```
+1. Run Webpack transpilation and watch for file changes:
+    ```bash
+    npm run spa:dev
+    ```
+1. Load the web app in your browser via URL:
+    ```
+    http://localhost:3000/
+    ```
