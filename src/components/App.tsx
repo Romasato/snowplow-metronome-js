@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import {Howl} from 'howler';
 
 import songsBPMs from '../configs/songsBPMs.json';
 
