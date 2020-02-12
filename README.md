@@ -58,11 +58,14 @@ Check `package.json` for more detailed command lines.
    
    ```bash
    cd snowplow-metronome-js
+   ```
+1. Install all NPM packages required for the app:
+   ```bash
    npm ci
    ```
 1. Just to see the app working simply run:
    ```bash
-       npm run start
+       npm start
    ```
    The app files will be built and web server started.
 1. Load the web app in your browser via URL:
