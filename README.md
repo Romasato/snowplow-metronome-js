@@ -8,6 +8,8 @@ Written using Javascript, NodeJS, TypeScript and React.
 
 Tested in latest version of Chrome, Opera, Firefox and IE Edge browsers.
 
+![App screenshot](/docs/app_screenshot.png?raw=true "The app as seen in browser")
+
 ## Directory Tree
 
 ```
