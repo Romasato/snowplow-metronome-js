@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 
 import {MetroBPMControl} from './MetroBPMControl';
+import '../styles/components/MetroBPMControls.scss';
 
 interface IComponentProps {
     currentBPM: number,
@@ -21,8 +22,8 @@ class MetroBPMControls extends React.Component<IComponentProps, {}> {
         const {availableBPMs, onClick, currentBPM} = this.props;
 
         return (
-            <div className='bpm-selector'>
-                <ul className='bpm-selector__buttons'>
+            <div className='MetroBPMControls'>
+                <div className='MetroBPMControls__buttons'>
                     {_.map(availableBPMs, (bpm: string) =>
                          (
                             <MetroBPMControl
@@ -33,7 +34,7 @@ class MetroBPMControls extends React.Component<IComponentProps, {}> {
                             />
                         )
                     )}
-                </ul>
+                </div>
             </div>
         );
     }

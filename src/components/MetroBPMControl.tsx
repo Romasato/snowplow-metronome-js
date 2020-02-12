@@ -1,6 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
 
+import '../styles/components/MetroBPMControl.scss';
+
 interface IComponentProps {
     bpm: number,
     isCurrent: boolean,
@@ -17,8 +19,8 @@ class MetroBPMControl extends React.Component<IComponentProps, any> {
         const {bpm, isCurrent} = this.props;
 
         return (
-            <button onClick={this.onClick} className={classnames('metronome_button', {
-                'metronome_button--active': isCurrent
+            <button onClick={this.onClick} className={classnames('metro-btn MetroBPMControl', {
+                'metro-btn--active': isCurrent
             })}>
                 {`${bpm} BPM`}
             </button>

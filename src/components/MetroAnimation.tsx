@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../styles/components/MetroAnimation.scss';
+
 interface IComponentProps {
     type: string,
     bpm: number,
@@ -12,8 +14,8 @@ class MetroAnimation extends React.Component<IComponentProps, {}> {
         const animationDuration = 60 / bpm;
 
         return (
-            <div className='metroAnimation'>
-                <div className='metroAnimation--oval'>
+            <div className='MetroAnimation'>
+                <div className='MetroAnimation--oval'>
                     <div className='oval__outer' style={{
                         animationDuration: `${isActive ? animationDuration : 0}s`
                     }} />

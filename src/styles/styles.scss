@@ -1,11 +1,6 @@
+@import 'sass-globals.scss';
 @import './fonts.scss';
-
-$color_highlight: #8eacff;
-$color_bg: #161020;
-$color_btn: #2d1c3f;
-$color_btn_active: #8eacff;
-$color_beat: #64bca4;
-$color_text: rgb(22, 16, 32);
+@import './common/buttons.scss';
 
 body {
     height: 100%;
@@ -15,6 +10,7 @@ body {
 
     font-family: 'Roboto', sans-serif;
     font-size: 1em;
+
     background-color: $color_bg;
     color: $color_highlight;
 }
@@ -23,160 +19,6 @@ body {
     flex: 0 1 auto;
     display: flex;
     flex-flow: column nowrap;
-}
-
-.metronome-container {
-    display: flex;
-    flex-flow: column nowrap;
-    margin-top: 3em;
-}
-
-.metronome {
-    width: 476px;
-    display: flex;
-    box-sizing: border-box;
-    flex: 1 1 0;
-    flex-flow: column nowrap;
-    align-self: center;
-    align-items: center;
-    padding: 20px 88px;
-    border: 1px solid $color_btn;
-
-    .title {
-        font-size: 18px;
-        font-weight: 300;
-        height: 21px;
-        letter-spacing: 6px;
-        text-align: center;
-        text-transform: uppercase;
-        width: 284px;
-        padding: 30px 0 50px 0;
-        text-shadow: 0 0 4px rgba(253, 253, 253, 0.7);
-    }
-}
-
-.metroAnimation {
-    .metroAnimation--oval {
-        $color_oval: rgb(100, 188, 164);
-
-        @keyframes animOvalScale {
-            0%   {
-                background: $color_oval;
-                opacity: 1;
-                transform: scale(0.5);
-            }
-
-            100%   {
-                background: $color_oval;
-                opacity: 0;
-                transform: scale(1);
-            }
-        }
-
-        display: flex;
-        position: relative;
-        flex-flow: column nowrap;
-        justify-content: center;
-        align-items: center;
-
-        .oval__outer {
-            display: flex;
-            flex-flow: row nowrap;
-            justify-content: center;
-            align-items: center;
-            height: 266px;
-            width: 266px;
-            border-radius: 266px;
-
-            background: radial-gradient(circle, $color_oval 0%, rgba($color_oval, 0) 70%);
-            background-position: 50% 50%;
-
-            animation: animOvalScale 1s ease-out infinite;
-        }
-
-        .oval__inner {
-            background: $color_oval;
-            height: 132px;
-            width: 132px;
-            border-radius: 132px;
-            display: flex;
-            flex-flow: row nowrap;
-            justify-content: center;
-            align-items: center;
-
-            font-size: 24px;
-            font-weight: normal;
-            letter-spacing: 1.33px;
-            text-align: center;
-
-            color: rgba($color_text, 0.6);
-            position: absolute;
-        }
-    }
-}
-
-.metronome_button {
-    background: $color_btn;
-    color: $color_btn_active;
-    min-width: 86px;
-    height: 35px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    font-size: 14px;
-
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
-    border: none;
-    border-radius: 5px;
-
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &--active {
-        background: $color_btn_active;
-        color: $color_text;
-    }
-
-    &:hover {
-        background: rgba($color_btn_active, 0.3)
-    }
-
-    &--startStop {
-        color: $color_bg;
-        background: #ae4f0a;
-        margin-top: 2em;
-        width: 100%;
-    }
-}
-
-.bpm-selector {
-    margin-top: 2em;
-
-    &__buttons {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between;
-    }
-}
-
-.matching-songs {
-    text-align: center;
-
-    &__header {
-        color: $color_highlight;
-        font-weight: bold;
-        margin: 0.5em 0 0.5em 0;
-    }
-
-    .matching-songs__list {
-        .matching-songs__song {
-            font-size: 0.9em;
-            font-weight: normal;
-            color: white;
-            margin-bottom: 0.4em;
-        }
-    }
 }
 
 footer {

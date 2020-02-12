@@ -1,0 +1,14 @@
+.MetroPlayControl {
+    $color_button_bg: $color_btn;
+    $color_button_bg--active: #ae4f0a;
+
+    color: $color_btn_active;
+    background: $color_button_bg;
+    margin-top: 2em;
+    width: 100%;
+
+    &.active {
+        background: $color_button_bg--active;
+        color: $color_text;
+    }
+}

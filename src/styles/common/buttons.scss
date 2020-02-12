@@ -1,0 +1,27 @@
+.metro-btn {
+    background: $color_btn;
+    color: $color_btn_active;
+    min-width: 86px;
+    height: 35px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 14px;
+
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 5px;
+
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--active {
+        background: $color_btn_active;
+        color: $color_text;
+    }
+
+    &:hover {
+        background: rgba($color_btn_active, 0.3)
+    }
+}

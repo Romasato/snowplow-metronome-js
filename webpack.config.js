@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const WebpackCopyPlugin = require('copy-webpack-plugin');
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
 const webpackConfig = {
     entry: {
@@ -11,13 +12,28 @@ const webpackConfig = {
         path: path.join(__dirname, './dist/'),
         publicPath: './dist'
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+            name: true,
+            cacheGroups: {
+                vendors: {
+                    chunks: 'initial',
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'commons',
+                    filename: 'commons.js',
+                    priority: -10
+                },
+                default: {
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true
+                }
+            }
+        }
+    },
     module: {
         rules: [
-           /* {
-                test: /\.(js|jsx)$/,
-                use: 'babel-loader',
-                exclude: /node_modules/
-            },*/
             {
                 test: /\.(tsx?|jsx?)$/,
                 use: [
@@ -33,9 +49,39 @@ const webpackConfig = {
             {
                 test: /\.s?css$/,
                 use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader'
+                    ExtractCssChunks.loader,
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    'resolve-url-loader',
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            implementation: require('sass'),
+                            sassOptions: {
+                                outputStyle: 'expanded',
+                                sourceMap: true,
+                                sourceMapContents: false,
+                                data: '@import "sass-globals.scss";',
+                                includePaths: [
+                                    path.join(__dirname, 'src/styles')
+                                ]
+                            }
+                        }
+                    },
+                    /*
+                        We need to prepend global SASS definitions whenever we import
+                        SASS files that use SASS globals, i.e. vars and mixins
+                     */
+                    {
+                        loader: 'sass-resources-loader',
+                        options: {
+                            resources: [path.join(__dirname, 'src/styles/sass-globals.scss')]
+                        },
+                    },
                 ]
             },
             {
@@ -78,6 +124,9 @@ const webpackConfig = {
         ]
     },
     plugins: [
+        new ExtractCssChunks({
+            filename: 'styles.css'
+        }),
         new WebpackCopyPlugin([
             { from: 'www', to: './' }
         ]),
@@ -87,7 +136,9 @@ const webpackConfig = {
             '.js',
             '.jsx',
             '.tsx',
-            '.ts'
+            '.ts',
+            '.json',
+            '.css'
         ]
     }
 };

@@ -1,4 +1,6 @@
 import React from 'react';
+
+import '../styles/components/MetroSongsMatchingBPM.scss';
 import {ISong} from '../ts-definitions/interfaces';
 
 interface IComponentProps {
@@ -9,16 +11,16 @@ class MetroSongsMatchingBPM extends React.Component<IComponentProps, {}> {
     render() {
         const {matchingSongs} = this.props;
         return (
-            <div className='matching-songs'>
+            <div className='MetroSongsMatchingBPM'>
                 {matchingSongs.length && (
                         <>
-                            <div className='matching-songs__header'>
+                            <div className='MetroSongsMatchingBPM__header'>
                                 Songs that use this BPM:
                             </div>
-                            <ul className='matching-songs__list'>
+                            <ul className='MetroSongsMatchingBPM__list'>
                                 {matchingSongs.map(({title, artist}, idx) => (
                                         <li
-                                            className='matching-songs__song'
+                                            className='MetroSongsMatchingBPM__song'
                                             key={`${idx}_${artist}_${title}`}
                                         >
                                             {artist} - {title}

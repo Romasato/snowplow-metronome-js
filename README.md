@@ -10,6 +10,9 @@ Tested in latest version of Chrome, Opera, Firefox and IE Edge browsers.
 
 ![App screenshot](/docs/app_screenshot.png?raw=true "The app as seen in browser")
 
+## TODO
+- [ ] Split SCSS file into smaller component-specific ones
+
 ## Directory Tree
 
 ```
@@ -21,6 +24,10 @@ src/                    --> Front-end web SPA sources and assets
         audio/          --> Audio files for metronome sounds
     components/         --> React components
     styles/             --> SASS files that will get transformed into regular CSS
+        common/         --> SASS styles shared across the app
+        components/     --> SASS files specific to components
+        sass-globals.scss --> Global SASS variables and definitions
+        styles.scss     --> CSS entry file
     ts-definitions/     --> Global TypeScript definitions
     config.json         --> Static config file - currently contains the songs and their BPM information.
     index.tsx           --> SPA entry file.
@@ -40,8 +47,8 @@ All the building and deploying ideally should be done via `npm run` scripts list
 | `npm run server:dev`          | (DEV) Runs NodeJS web server and watches files for changes restarting server automatically . |
 | `npm run spa:prod`            | (Prod) Builds production version of the web app in `dist` directory. |
 | `npm run server:prod`         | (Prod) Generates production-ready NodeJS server files in `dist-server` dir. |
-| `npm run build:all`           | (Prod) Generates production-ready BOTh server and web app files. |
-| `npm run start`               | (Prod) Starts NodeJS web server after generating production-ready server and web app files. |
+| `npm run build:all`           | (Prod) Cleans previous build and generates production-ready server and web app files. |
+| `npm start`                   | (Prod) Starts NodeJS web server after generating production-ready server and web app files. |
 
 Check `package.json` for more detailed command lines.
 

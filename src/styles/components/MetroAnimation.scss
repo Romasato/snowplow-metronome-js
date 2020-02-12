@@ -1,0 +1,59 @@
+.MetroAnimation {
+    &--oval {
+        $color_oval: rgb(100, 188, 164);
+
+        @keyframes animOvalScale {
+            from {
+                background: $color_oval;
+                opacity: 1;
+                transform: scale(0.5);
+            }
+
+            to {
+                background: $color_oval;
+                opacity: 0;
+                transform: scale(1);
+            }
+        }
+
+        display: flex;
+        position: relative;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+
+        .oval__outer {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+            height: 266px;
+            width: 266px;
+            border-radius: 266px;
+
+            background: radial-gradient(circle, $color_oval 0%, rgba($color_oval, 0) 70%);
+            background-position: 50% 50%;
+
+            animation: animOvalScale 1s ease-out infinite;
+        }
+
+        .oval__inner {
+            background: $color_oval;
+            height: 132px;
+            width: 132px;
+            border-radius: 132px;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 24px;
+            font-weight: normal;
+            letter-spacing: 1.33px;
+            text-align: center;
+
+            color: rgba($color_text, 0.6);
+            position: absolute;
+        }
+    }
+}

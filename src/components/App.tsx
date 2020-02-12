@@ -11,6 +11,8 @@ import {MetroPlayControl} from './MetroPlayControl';
 import {MetroBPMControls} from './MetroBPMControls';
 import {MetroSongsMatchingBPM} from './MetroSongsMatchingBPM';
 
+import '../styles/components/App.scss';
+
 // Since we're importing songs from static config, we can do it here
 const songsByBPM = CONFIG.songsBPMs.reduce<ISongsByBPM>((objBPM: any, song: Array<any>) => {
     const [title, artist, bpm] = song;
