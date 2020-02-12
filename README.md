@@ -45,8 +45,7 @@ All the building and deploying ideally should be done via `npm run` scripts list
 
 Check `package.json` for more detailed command lines.
 
-
-### Setup for Development
+### Running the App Locally
 1. Install Node.js and NPM versions compatible with the ones specified in `package.json`. Check it all is good by executing `node -v` command which should output something similar to the below:
     ```
     v12.13.1
@@ -61,6 +60,17 @@ Check `package.json` for more detailed command lines.
    cd snowplow-metronome-js
    npm ci
    ```
+1. Just to see the app working simply run:
+   ```bash
+       npm run start
+   ```
+   The app files will be built and web server started.
+1. Load the web app in your browser via URL:
+    ```
+    http://localhost:3000/
+    ```
+
+For development it is easier to run server and client-side app processes in two separate terminal windows:
 1. Start server:
     ```bash
     npm run server:dev
@@ -69,7 +79,5 @@ Check `package.json` for more detailed command lines.
     ```bash
     npm run spa:dev
     ```
-1. Load the web app in your browser via URL:
-    ```
-    http://localhost:3000/
-    ```
+
+Good luck!
