@@ -1,28 +1,17 @@
-import React, {Component, SyntheticEvent} from 'react';
+import React from 'react';
 import _ from 'lodash';
-import classnames from 'classnames';
+import {Howl} from 'howler';
 
 import CONFIG from '../config.json';
-import {BPMControl} from "./BPMControl";
-import {Howl} from 'howler';
 import mp3TickURL from '../assets/audio/tick.mp3';
-import Timeout = NodeJS.Timeout;
+import {ISongsByBPM, ISong} from '../ts-definitions/interfaces';
 
-interface ISongBPM {
-    title: string;
-    artist: string;
-    bpm: number;
-}
+import {MetroAnimation} from './MetroAnimation';
+import {MetroPlayControl} from './MetroPlayControl';
+import {MetroBPMControls} from './MetroBPMControls';
+import {MetroSongsMatchingBPM} from './MetroSongsMatchingBPM';
 
-interface ISong {
-    artist: string;
-    title: string;
-}
-
-interface ISongsByBPM {
-    [bpm: number]: Array<ISong>;
-}
-
+// Since we're importing songs from static config, we can do it here
 const songsByBPM = CONFIG.songsBPMs.reduce<ISongsByBPM>((objBPM: any, song: Array<any>) => {
     const [title, artist, bpm] = song;
     if(bpm === undefined) { return objBPM; };
@@ -34,37 +23,41 @@ const songsByBPM = CONFIG.songsBPMs.reduce<ISongsByBPM>((objBPM: any, song: Arra
     return objBPM;
 }, {} as ISongsByBPM);
 
-interface IState {
+interface IComponentState {
     currentBPM: number,
     isPlaying: boolean
 }
 
-var tickSound = new Howl({
-    src: [mp3TickURL],
-    autoplay: false,
-    loop: false,
-    volume: 0.8
-});
-
-class App extends Component<any, IState> {
+/**
+ * Main app component
+ */
+class App extends React.Component<{}, IComponentState> {
     state = {
         currentBPM: +_.keys(songsByBPM)[0],
         isPlaying: false
     };
 
-    soundInterval: Timeout = null;
+    // Setup the sound we are going to be playing
+    tickSound = new Howl({
+        src: [mp3TickURL],
+        autoplay: false,
+        loop: false,
+        volume: 0.8
+    });
+
+    soundInterval: NodeJS.Timeout = null;
     playSound = (currentBPM: number) => {
         this.stopSound(); // Stop current playback before starting new one
 
-        setTimeout(() => {
-            tickSound.play();
-            this.soundInterval = setInterval(() => {
-                tickSound.play();
-            }, (60 / currentBPM) * 1000);
-        }, 300);
+        this.tickSound.play();
+        const msRepeatEvery = (60 / currentBPM) * 1000;
+        this.soundInterval = setInterval(() => {
+            this.tickSound.play();
+        }, msRepeatEvery);
     };
 
     stopSound = () => {
+        this.tickSound.stop();
         clearInterval(this.soundInterval);
     };
 
@@ -80,7 +73,6 @@ class App extends Component<any, IState> {
     };
 
     onBPMClick = (bpm: number) => {
-        console.warn({bpm});
         const {isPlaying} = this.state;
         if(isPlaying) {
             this.playSound(bpm);
@@ -91,43 +83,24 @@ class App extends Component<any, IState> {
     render() {
         const {currentBPM, isPlaying} = this.state;
         const matchingSongs: Array<ISong> = songsByBPM[currentBPM] || [];
+        const availableBPMs = _.keys(songsByBPM);
 
         return (
             <div className='metronome-container'>
                 <div className='metronome'>
                     <h1 className='title'>Digital Metronome</h1>
-
-                    <div className='graphvis'>
-                        <div className='graphvis--oval'>
-                            <div className='oval__outer' style={{
-                                animationDuration: `${isPlaying ? (60 / currentBPM) : 0}s`
-                            }} />
-                            <div className='oval__inner'>{currentBPM}</div>
-                        </div>
-                    </div>
-                    <button className={classnames('metronome_button metronome_button--startStop', {
-                        'metronome_button--active': isPlaying
-                    })} onClick={this.onPlayControlClick}>{isPlaying ? 'STOP' : 'START'}</button>
-                    <div className='bpm-selector'>
-                        <ul className='bpm-selector__buttons'>
-                            {_.map(songsByBPM, (song: string, bpm: number) => {
-                                return (
-                                    <BPMControl key={bpm} bpm={bpm} isCurrent={+bpm === currentBPM} onClick={this.onBPMClick.bind(this, +bpm)} />
-                                );
-                            })}
-                        </ul>
-                    </div>
-                    {matchingSongs.length && (
-                        <div className='matching-songs'>
-                            <div className='matching-songs__header'>Songs that use this BPM:</div>
-                            <ul>
-                                {matchingSongs.map(({title, artist}, idx) => (
-                                        <li key={`${idx}_${artist}_${title}`}>{artist} - {title}</li>
-                                    )
-                                )}
-                            </ul>
-                        </div>
-                    )}
+                    <MetroAnimation
+                        type='oval'
+                        bpm={currentBPM}
+                        isActive={isPlaying}
+                    />
+                    <MetroPlayControl isActive={isPlaying} onClick={this.onPlayControlClick} />
+                    <MetroBPMControls
+                        currentBPM={currentBPM}
+                        availableBPMs={availableBPMs}
+                        onClick={this.onBPMClick}
+                    />
+                    <MetroSongsMatchingBPM matchingSongs={matchingSongs} />
                 </div>
             </div>
         );

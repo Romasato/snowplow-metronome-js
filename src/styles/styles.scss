@@ -1,11 +1,11 @@
+@import './fonts.scss';
+
 $color_highlight: #8eacff;
 $color_bg: #161020;
 $color_btn: #2d1c3f;
 $color_btn_active: #8eacff;
 $color_beat: #64bca4;
 $color_text: rgb(22, 16, 32);
-
-@import './fonts.scss';
 
 body {
     height: 100%;
@@ -20,8 +20,7 @@ body {
 }
 
 #root {
-    flex: 1 1 auto;
-
+    flex: 0 1 auto;
     display: flex;
     flex-flow: column nowrap;
 }
@@ -34,14 +33,13 @@ body {
 
 .metronome {
     width: 476px;
-    flex: 1 1 0;
-    padding: 20px 88px;
     display: flex;
     box-sizing: border-box;
-    align-self: center;
+    flex: 1 1 0;
     flex-flow: column nowrap;
+    align-self: center;
     align-items: center;
-
+    padding: 20px 88px;
     border: 1px solid $color_btn;
 
     .title {
@@ -53,13 +51,28 @@ body {
         text-transform: uppercase;
         width: 284px;
         padding: 30px 0 50px 0;
+        text-shadow: 0 0 4px rgba(253, 253, 253, 0.7);
     }
 }
 
-$color_oval: rgb(100, 188, 164);
+.metroAnimation {
+    .metroAnimation--oval {
+        $color_oval: rgb(100, 188, 164);
 
-.graphvis {
-    .graphvis--oval {
+        @keyframes animOvalScale {
+            0%   {
+                background: $color_oval;
+                opacity: 1;
+                transform: scale(0.5);
+            }
+
+            100%   {
+                background: $color_oval;
+                opacity: 0;
+                transform: scale(1);
+            }
+        }
+
         display: flex;
         position: relative;
         flex-flow: column nowrap;
@@ -78,7 +91,7 @@ $color_oval: rgb(100, 188, 164);
             background: radial-gradient(circle, $color_oval 0%, rgba($color_oval, 0) 70%);
             background-position: 50% 50%;
 
-            animation: fade 1s ease-in-out infinite;
+            animation: animOvalScale 1s ease-out infinite;
         }
 
         .oval__inner {
@@ -99,20 +112,6 @@ $color_oval: rgb(100, 188, 164);
             color: rgba($color_text, 0.6);
             position: absolute;
         }
-    }
-}
-
-@keyframes fade {
-    0%   {
-        background: $color_oval;
-        opacity: 1;
-        transform: scale(0.5);
-    }
-
-    100%   {
-        background: $color_oval;
-        opacity: 0;
-        transform: scale(1);
     }
 }
 
@@ -144,6 +143,8 @@ $color_oval: rgb(100, 188, 164);
     }
 
     &--startStop {
+        color: $color_bg;
+        background: #ae4f0a;
         margin-top: 2em;
         width: 100%;
     }
@@ -160,19 +161,20 @@ $color_oval: rgb(100, 188, 164);
 }
 
 .matching-songs {
+    text-align: center;
+
     &__header {
         color: $color_highlight;
         font-weight: bold;
         margin: 0.5em 0 0.5em 0;
     }
 
-    text-align: center;
-
-    ul {
-        li {
+    .matching-songs__list {
+        .matching-songs__song {
             font-size: 0.9em;
             font-weight: normal;
             color: white;
+            margin-bottom: 0.4em;
         }
     }
 }
@@ -182,4 +184,5 @@ footer {
     font-size: .6em;
     text-align: center;
     padding: 20px;
+    color: #c19c44;
 }
