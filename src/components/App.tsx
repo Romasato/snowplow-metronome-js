@@ -3,8 +3,9 @@ import _ from 'lodash';
 import {Howl} from 'howler';
 
 import songsBPMs from '../configs/songsBPMs.json';
-import mp3TickURL from '../assets/audio/tick.mp3';
+
 import {ISongsByBPM, ISong} from '../ts-definitions/interfaces';
+import {soundGenerator} from '../utils/soundGenerator';
 
 import {MetroAnimation} from './MetroAnimation';
 import {MetroPlayControl} from './MetroPlayControl';
@@ -13,7 +14,7 @@ import {MetroSongsMatchingBPM} from './MetroSongsMatchingBPM';
 
 import '../styles/components/App.scss';
 
-// Since we're importing songs from static config, we can do it here
+// Group songs by BPM. Since we're importing songs from static config, we can do it here.
 const songsByBPM = songsBPMs.reduce<ISongsByBPM>((objBPM: any, song: Array<any>) => {
     const [title, artist, bpm] = song;
     if(bpm === undefined) { return objBPM; };
@@ -39,45 +40,21 @@ class App extends React.Component<{}, IComponentState> {
         isPlaying: false
     };
 
-    // Setup the sound we are going to be playing
-    tickSound = new Howl({
-        src: [mp3TickURL],
-        autoplay: false,
-        loop: false,
-        volume: 0.8
-    });
-
-    soundInterval: NodeJS.Timeout = null;
-    playSound = (currentBPM: number) => {
-        this.stopSound(); // Stop current playback before starting new one
-
-        this.tickSound.play();
-        const msRepeatEvery = (60 / currentBPM) * 1000;
-        this.soundInterval = setInterval(() => {
-            this.tickSound.play();
-        }, msRepeatEvery);
-    };
-
-    stopSound = () => {
-        this.tickSound.stop();
-        clearInterval(this.soundInterval);
-    };
-
     onPlayControlClick = () => {
         const {isPlaying, currentBPM} = this.state;
         this.setState({isPlaying: !isPlaying});
 
         if(!isPlaying) {
-            this.playSound(currentBPM);
+            soundGenerator.play(currentBPM);
         } else {
-            this.stopSound();
+            soundGenerator.stop();
         }
     };
 
     onBPMClick = (bpm: number) => {
         const {isPlaying} = this.state;
         if(isPlaying) {
-            this.playSound(bpm);
+            soundGenerator.play(bpm);
         }
         this.setState({currentBPM: bpm});
     };
@@ -96,7 +73,10 @@ class App extends React.Component<{}, IComponentState> {
                         bpm={currentBPM}
                         isActive={isPlaying}
                     />
-                    <MetroPlayControl isActive={isPlaying} onClick={this.onPlayControlClick} />
+                    <MetroPlayControl
+                        isActive={isPlaying}
+                        onClick={this.onPlayControlClick}
+                    />
                     <MetroBPMControls
                         currentBPM={currentBPM}
                         availableBPMs={availableBPMs}
