@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import {Howl} from 'howler';
 
-import CONFIG from '../config.json';
+import songsBPMs from '../configs/songsBPMs.json';
 import mp3TickURL from '../assets/audio/tick.mp3';
 import {ISongsByBPM, ISong} from '../ts-definitions/interfaces';
 
@@ -14,7 +14,7 @@ import {MetroSongsMatchingBPM} from './MetroSongsMatchingBPM';
 import '../styles/components/App.scss';
 
 // Since we're importing songs from static config, we can do it here
-const songsByBPM = CONFIG.songsBPMs.reduce<ISongsByBPM>((objBPM: any, song: Array<any>) => {
+const songsByBPM = songsBPMs.reduce<ISongsByBPM>((objBPM: any, song: Array<any>) => {
     const [title, artist, bpm] = song;
     if(bpm === undefined) { return objBPM; };
     if(!objBPM[bpm]) {
