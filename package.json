@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "spa:dev": "webpack --progress --mode=development --watch --config webpack.config.js",
+    "spa:dev": "rm -rf dist && webpack --progress --mode=development --watch --config webpack.config.js",
     "spa:prod": "webpack --progress -p --config webpack.config.js",
     "server:dev": "ts-node-dev --project ./tsconfig.server.json --respawn --transpileOnly ./server/server.ts",
     "server:prod": "tsc --project ./tsconfig.server.json",

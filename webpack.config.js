@@ -17,17 +17,18 @@ const webpackConfig = {
             chunks: 'all',
             name: true,
             cacheGroups: {
-                vendors: {
-                    chunks: 'initial',
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'commons',
-                    filename: 'commons.js',
-                    priority: -10
-                },
                 default: {
                     minChunks: 2,
                     priority: -20,
                     reuseExistingChunk: true
+                },
+                vendors: {
+                    name: 'commons',
+                    chunks: 'all',
+                    test: /[\\/]node_modules[\\/]/,
+                    filename: 'commons.js',
+                    priority: -10,
+                    enforce: true
                 }
             }
         }
@@ -62,13 +63,9 @@ const webpackConfig = {
                         options: {
                             implementation: require('sass'),
                             sassOptions: {
-                                outputStyle: 'expanded',
+                                outputStyle: 'compressed',
                                 sourceMap: true,
-                                sourceMapContents: false,
-                                data: '@import "sass-globals.scss";',
-                                includePaths: [
-                                    path.join(__dirname, 'src/styles')
-                                ]
+                                sourceMapContents: false
                             }
                         }
                     },
@@ -125,7 +122,8 @@ const webpackConfig = {
     },
     plugins: [
         new ExtractCssChunks({
-            filename: 'styles.css'
+            filename: '[name].css',
+            chunkFilename: '[name].css'
         }),
         new WebpackCopyPlugin([
             { from: 'www', to: './' }
