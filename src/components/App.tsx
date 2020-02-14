@@ -14,7 +14,7 @@ import {MetroSongsMatchingBPM} from './MetroSongsMatchingBPM';
 import '../styles/components/App.scss';
 
 // Group songs by BPM. Since we're importing songs from static config, we can do it here.
-const songsByBPM = songsBPMs.reduce<ISongsByBPM>((objBPM: any, song: Array<any>) => {
+const songsByBPM: ISongsByBPM = songsBPMs.reduce<ISongsByBPM>((objBPM: any, song: Array<any>) => {
     const [title, artist, bpm] = song;
     if(bpm === undefined) { return objBPM; };
     if(!objBPM[bpm]) {
