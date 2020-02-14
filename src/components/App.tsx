@@ -5,7 +5,7 @@ import songsBPMs from '../configs/songsBPMs.json';
 import {TSongInfoArray} from '../ts-definitions/types';
 import {ISongsByBPM, ISong} from '../ts-definitions/interfaces';
 
-import {soundGenerator} from '../utils/soundGenerator';
+import {SoundGenerator} from '../utils/SoundGenerator';
 
 import {MetroAnimation} from './MetroAnimation';
 import {MetroPlayControl} from './MetroPlayControl';
@@ -42,22 +42,33 @@ class App extends React.Component<{}, IComponentState> {
         currentBPM: +_.keys(songsByBPM)[0],
         isPlaying: false
     };
+    soundGenerator: SoundGenerator = null;
+
+    // We have to instantiate sound on user action - otherwise Firefox complains
+    checkInitSoundGenerator = () => {
+        if(!this.soundGenerator) {
+            this.soundGenerator = new SoundGenerator();
+        }
+    };
 
     onPlayControlClick = () => {
         const {isPlaying, currentBPM} = this.state;
         this.setState({isPlaying: !isPlaying});
 
+        this.checkInitSoundGenerator();
+
         if(!isPlaying) {
-            soundGenerator.play(currentBPM);
+            this.soundGenerator.play(currentBPM);
         } else {
-            soundGenerator.stop();
+            this.soundGenerator.stop();
         }
     };
 
     onBPMClick = (bpm: number) => {
         const {isPlaying} = this.state;
         if(isPlaying) {
-            soundGenerator.play(bpm);
+            this.checkInitSoundGenerator();
+            this.soundGenerator.play(bpm);
         }
         this.setState({currentBPM: bpm});
     };

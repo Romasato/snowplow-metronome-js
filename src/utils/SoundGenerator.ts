@@ -29,5 +29,4 @@ class SoundGenerator {
     };
 }
 
-const soundGenerator = new SoundGenerator();
-export {soundGenerator, SoundGenerator};
+export {SoundGenerator};
