@@ -2,8 +2,9 @@ import React from 'react';
 import _ from 'lodash';
 
 import songsBPMs from '../configs/songsBPMs.json';
-
+import {TSongInfoArray} from '../ts-definitions/types';
 import {ISongsByBPM, ISong} from '../ts-definitions/interfaces';
+
 import {soundGenerator} from '../utils/soundGenerator';
 
 import {MetroAnimation} from './MetroAnimation';
@@ -14,7 +15,7 @@ import {MetroSongsMatchingBPM} from './MetroSongsMatchingBPM';
 import '../styles/components/App.scss';
 
 // Group songs by BPM. Since we're importing songs from static config, we can do it here.
-const songsByBPM: ISongsByBPM = songsBPMs.reduce<ISongsByBPM>((objBPM: any, song: Array<any>) => {
+const songsByBPM: ISongsByBPM = songsBPMs.reduce<ISongsByBPM>((objBPM: ISongsByBPM, song: TSongInfoArray) => {
     const [title, artist, bpm] = song;
     if(bpm === undefined) { return objBPM; };
     if(!objBPM[bpm]) {
