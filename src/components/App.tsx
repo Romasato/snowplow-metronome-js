@@ -22,6 +22,9 @@ const songsByBPM = songsBPMs.reduce<ISongsByBPM>((objBPM: any, song: Array<any>)
     }
 
     objBPM[bpm].push({artist, title});
+
+    // Ensure the songs are always sorted by artist
+    objBPM[bpm] = _.sortBy(objBPM[bpm], (song: ISong) => song.artist);
     return objBPM;
 }, {} as ISongsByBPM);
 

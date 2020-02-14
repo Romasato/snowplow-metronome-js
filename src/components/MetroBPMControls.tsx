@@ -20,6 +20,7 @@ class MetroBPMControls extends React.Component<IComponentProps, {}> {
 
     render() {
         const {availableBPMs, onClick, currentBPM} = this.props;
+        const sortedBPMs = availableBPMs.sort((bpmA, bpmB) => +bpmA - +bpmB);
 
         return (
             <div className='MetroBPMControls'>

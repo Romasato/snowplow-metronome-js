@@ -18,7 +18,7 @@ class SoundGenerator {
         this.stop(); // Stop current playback before starting new one
         this.soundPlayer.play(); // And start playing right away
 
-        const msRepeatEvery = (60 / bpm) * 1000;
+        const msRepeatEvery: number = (60 / bpm) * 1000;
         this.soundInterval = setInterval(() => {
             this.soundPlayer.play();
         }, msRepeatEvery);
