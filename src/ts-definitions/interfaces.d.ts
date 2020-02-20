@@ -13,4 +13,16 @@ interface ISongsByBPM {
     [bpm: number]: Array<ISong>;
 }
 
-export {ISongBPM, ISong, ISongsByBPM};
+interface IAppState {
+    isPlaying: boolean;
+    currentBPM: number;
+    songsByBPM: ISongsByBPM;
+    isFetchingSongs: boolean;
+}
+
+export {
+    IAppState,
+    ISongBPM,
+    ISong,
+    ISongsByBPM
+};

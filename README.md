@@ -20,6 +20,8 @@ src/                    --> Front-end web SPA sources and assets
         fonts/          --> Font files in formats for different browsers
         audio/          --> Audio files for metronome sounds
     components/         --> React components
+    configs/            --> App config files
+    stores/             --> App state store files
     styles/             --> SASS files that will get transformed into regular CSS
         common/         --> SASS styles shared across the app
         components/     --> SASS files specific to components

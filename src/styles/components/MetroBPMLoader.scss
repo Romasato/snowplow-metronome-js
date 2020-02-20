@@ -1,0 +1,12 @@
+.bpm-loader {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    margin: 20px 0;
+
+    .bpm-loader__msg {
+        margin-top: 20px;
+    }
+}
