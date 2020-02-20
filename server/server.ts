@@ -15,5 +15,5 @@ const server = http.createServer((request: http.IncomingMessage, response: http.
 });
 
 server.listen(SERVER_PORT, () => {
-    console.log(`Running at http://localhost:${SERVER_PORT}`);
+    console.log(`WEB SERVER: Running at http://localhost:${SERVER_PORT}/...`);
 });
