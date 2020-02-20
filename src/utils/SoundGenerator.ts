@@ -1,5 +1,4 @@
-import {Howl} from "howler";
-
+import {Howl} from 'howler';
 import mp3TickURL from '../assets/audio/tick.mp3';
 
 class SoundGenerator {

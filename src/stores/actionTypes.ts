@@ -1,9 +1,11 @@
-const BPM_SET = 'bpm_set';
-const METRONOME_START = 'metronome_start';
-const METRONOME_STOP = 'metronome_stop';
+const BPM_SET = 'BPM_SET';
+const METRONOME_START = 'METRONOME_START';
+const METRONOME_STOP = 'METRONOME_STOP';
+const NET_FETCH_SONGS = 'NET_FETCH_SONGS';
 
 export {
     BPM_SET,
     METRONOME_START,
-    METRONOME_STOP
+    METRONOME_STOP,
+    NET_FETCH_SONGS
 };

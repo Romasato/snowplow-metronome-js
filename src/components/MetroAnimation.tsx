@@ -20,7 +20,7 @@ class MetroAnimation extends React.Component<IComponentProps, {}> {
                         animationDuration: `${isActive ? animationDuration : 0}s`
                     }} />
                     <div className='oval__inner'>
-                        {bpm !== undefined ? bpm : ''}
+                        {!!bpm ? bpm : '...'}
                     </div>
                 </div>
             </div>

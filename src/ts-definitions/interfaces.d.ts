@@ -17,6 +17,7 @@ interface IAppState {
     isPlaying: boolean;
     currentBPM: number;
     songsByBPM: ISongsByBPM;
+    isFetchingSongs: boolean;
 }
 
 export {

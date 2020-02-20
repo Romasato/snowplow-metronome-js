@@ -5,12 +5,13 @@ import _ from 'lodash';
 import {ISongsByBPM, ISong, IAppState} from '../ts-definitions/interfaces';
 
 import {SoundGenerator} from '../utils/SoundGenerator';
-import {setBPM, metroStart, metroStop} from '../stores/actions';
+import {setBPM, metroStart, metroStop, fetchSongs} from '../stores/actions';
 
 import {MetroAnimation} from './MetroAnimation';
 import {MetroPlayControl} from './MetroPlayControl';
 import {MetroBPMControls} from './MetroBPMControls';
 import {MetroSongsMatchingBPM} from './MetroSongsMatchingBPM';
+import {MetroBPMLoader} from './MetroBPMLoader';
 
 import '../styles/components/App.scss';
 
@@ -32,22 +33,16 @@ const mapStateToProps = (state: IAppState) => {
     return {
         currentBPM: state.currentBPM,
         isPlaying: state.isPlaying,
-        songsByBPM: state.songsByBPM
+        songsByBPM: state.songsByBPM,
+        isFetchingSongs: state.isFetchingSongs
     }
 };
 
-const mapDispatchToProps = (dispatch: Function) => {
-    return {
-        setNewBPM: (newBPM: number) => {
-            dispatch(setBPM(newBPM));
-        },
-        metroStart: () => {
-            dispatch(metroStart());
-        },
-        metroStop: () => {
-            dispatch(metroStop());
-        }
-    };
+const mapDispatchToProps = {
+        setNewBPM: setBPM,
+        metroStart,
+        metroStop,
+        fetchSongs
 };
 
 const stateConnector = connect(mapStateToProps, mapDispatchToProps);
@@ -58,6 +53,11 @@ type TComponentProps = ConnectedProps<typeof stateConnector> & IComponentProps;
  * Main app component
  */
 class App extends React.Component<TComponentProps, IComponentState> {
+    componentDidMount() {
+        const {fetchSongs} = this.props;
+        fetchSongs();
+    }
+
     soundGenerator: SoundGenerator = null;
 
     // We have to instantiate sound on user action - otherwise Firefox complains
@@ -92,7 +92,7 @@ class App extends React.Component<TComponentProps, IComponentState> {
     };
 
     render() {
-        const {currentBPM, isPlaying, songsByBPM} = this.props;
+        const {currentBPM, isPlaying, songsByBPM, isFetchingSongs} = this.props;
         const matchingSongs: Array<ISong> = songsByBPM[currentBPM] || [];
         const availableBPMs = _.keys(songsByBPM);
 
@@ -105,16 +105,24 @@ class App extends React.Component<TComponentProps, IComponentState> {
                         bpm={currentBPM}
                         isActive={isPlaying}
                     />
-                    <MetroPlayControl
-                        isActive={isPlaying}
-                        onClick={this.onPlayControlClick}
-                    />
-                    <MetroBPMControls
-                        currentBPM={currentBPM}
-                        availableBPMs={availableBPMs}
-                        onClick={this.onBPMClick}
-                    />
-                    <MetroSongsMatchingBPM matchingSongs={matchingSongs} />
+
+                    {isFetchingSongs ? (
+                        <MetroBPMLoader />
+                    ) : (
+                        <>
+                            <MetroPlayControl
+                                isActive={isPlaying}
+                                isDisabled={!currentBPM}
+                                onClick={this.onPlayControlClick}
+                            />
+                            <MetroBPMControls
+                                currentBPM={currentBPM}
+                                availableBPMs={availableBPMs}
+                                onClick={this.onBPMClick}
+                            />
+                            <MetroSongsMatchingBPM matchingSongs={matchingSongs} />
+                        </>
+                    )}
                 </div>
             </div>
         );

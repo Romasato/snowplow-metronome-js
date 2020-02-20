@@ -15,7 +15,7 @@ const webpackConfig = {
     optimization: {
         splitChunks: {
             chunks: 'all',
-            name: true,
+            name: false,
             cacheGroups: {
                 default: {
                     minChunks: 2,

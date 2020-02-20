@@ -12,7 +12,7 @@ class MetroSongsMatchingBPM extends React.Component<IComponentProps, {}> {
         const {matchingSongs} = this.props;
         return (
             <div className='MetroSongsMatchingBPM'>
-                {matchingSongs.length && (
+                {!!matchingSongs.length && (
                         <>
                             <div className='MetroSongsMatchingBPM__header'>
                                 Songs that use this BPM:
