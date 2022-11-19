@@ -50,7 +50,7 @@
     "extract-css-chunks-webpack-plugin": "^4.7.4",
     "file-loader": "^5.0.2",
     "mini-css-extract-plugin": "^0.9.0",
-    "resolve-url-loader": "^3.1.1",
+    "resolve-url-loader": "^5.0.0",
     "sass": "^1.25.0",
     "sass-loader": "^8.0.2",
     "sass-resources-loader": "^2.0.1",
@@ -58,7 +58,7 @@
     "ts-loader": "^6.2.1",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.5",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.12"
   },
   "engines": {
     "node": ">=10.0.0",
